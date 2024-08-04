@@ -9,7 +9,10 @@
     "start": "npm run build && node dist/server.js",
     "lint": "eslint . --ext .ts",
     "lint-and-fix": "eslint . --ext .ts --fix",
-    "prettier-format": "prettier --config .prettierrc 'src/**/*.ts' --write"
+    "prettier-format": "prettier --config .prettierrc 'src/**/*.ts' --write",
+    "migrate": "prisma migrate dev --schema=src/prisma/schema.prisma",
+    "generate": "prisma generate --schema=src/prisma/schema.prisma",
+    "studio": "prisma studio --schema=src/prisma/schema.prisma"
   },
   "keywords": [],
   "author": "",
