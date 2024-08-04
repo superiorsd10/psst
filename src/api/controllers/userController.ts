@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { userService } from '../../services/userService';
 import { ApiError } from '../../utils/apiError';
+import { LoginInput, RegisterInput } from '../../schemas/userSchemas';
 
 class UserController {
     async register(
@@ -9,8 +10,11 @@ class UserController {
         next: NextFunction
     ): Promise<void> {
         try {
-            const { username, password } = req.body;
-            const result = await userService.register(username, password);
+            const user: RegisterInput = req.body;
+            const result = await userService.register(
+                user.username,
+                user.password
+            );
             res.json(result);
         } catch (error) {
             next(error);
@@ -23,8 +27,11 @@ class UserController {
         next: NextFunction
     ): Promise<void> {
         try {
-            const { username, password } = req.body;
-            const result = await userService.login(username, password);
+            const user: LoginInput = req.body;
+            const result = await userService.login(
+                user.username,
+                user.password
+            );
             res.json(result);
         } catch (error) {
             next(error);
