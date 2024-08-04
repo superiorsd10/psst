@@ -1,11 +1,15 @@
 import http from 'http';
 import { Express } from 'express';
 import config from './config/config';
+import { redisService } from './services/redisService';
 
 const PORT = config.port;
 
 const startServer = async () => {
     try {
+        await redisService.initialize();
+        console.info('Redis initialized successfully');
+
         const { default: createApp } = await import('./app');
 
         const app: Express = createApp();
@@ -21,6 +25,8 @@ const startServer = async () => {
             console.info('Closing http server...');
             server.close(async () => {
                 console.info('HTTP server closed');
+                await redisService.disconnect();
+                console.info('Redis disconnected');
                 process.exit(0);
             });
         };
