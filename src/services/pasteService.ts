@@ -2,11 +2,10 @@ import prisma from '../prisma/prisma';
 import { s3Service } from './s3Service';
 import { encryptionService } from './encryptionService';
 import { idGenerationService } from './idGenerationService';
-import { kafkaProducerService } from './kafkaService';
 import { ApiError } from '../utils/apiError';
 import { CreatePasteInput } from '../schemas/pasteSchemas';
 import { redisService } from './redisService';
-import { timeStamp } from 'console';
+import { pasteClickService } from './pasteClickService';
 
 class PasteService {
     async createPaste(
@@ -115,17 +114,7 @@ class PasteService {
 
         await redisService.set(`paste:${pasteId}`, JSON.stringify(pasteData));
 
-        await kafkaProducerService.send({
-            topic: 'paste-views',
-            messages: [
-                {
-                    value: JSON.stringify({
-                        pasteId,
-                        timeStamp: new Date().toISOString()
-                    })
-                }
-            ]
-        });
+        await pasteClickService.incrementClick(pasteId);
 
         return pasteData;
     }
