@@ -47,6 +47,34 @@ class RedisService {
     async del(key: string): Promise<void> {
         await this.client.del(key);
     }
+
+    async zincrby(
+        key: string,
+        increment: number,
+        member: string
+    ): Promise<number> {
+        return await this.client.zIncrBy(key, increment, member);
+    }
+
+    async zrangebyscore(
+        key: string,
+        min: string,
+        max: string
+    ): Promise<string[]> {
+        return await this.client.zRangeByScore(key, min, max);
+    }
+
+    async zremrangebyscore(
+        key: string,
+        min: string,
+        max: string
+    ): Promise<number> {
+        return await this.client.zRemRangeByScore(key, min, max);
+    }
+
+    async pipeline(): Promise<ReturnType<RedisClientType['multi']>> {
+        return this.client.multi();
+    }
 }
 
 export const redisService = RedisService.getInstance();
