@@ -1,7 +1,8 @@
 import {
     S3Client,
     PutObjectCommand,
-    GetObjectCommand
+    GetObjectCommand,
+    DeleteObjectCommand
 } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { ApiError } from '../utils/apiError';
@@ -46,6 +47,20 @@ class S3Service {
             return await getSignedUrl(this.s3Client, command);
         } catch (error) {
             throw ApiError.internal('Error generating signed URL');
+        }
+    }
+
+    async deleteFile(key: string): Promise<void> {
+        const command = new DeleteObjectCommand({
+            Bucket: this.bucket,
+            Key: key
+        });
+
+        try {
+            await this.s3Client.send(command);
+        } catch (error) {
+            console.error('Error deleting file from S3:', error);
+            throw ApiError.internal('Error deleting file from S3');
         }
     }
 }
