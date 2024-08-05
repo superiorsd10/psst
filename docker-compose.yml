@@ -23,7 +23,7 @@ services:
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
 
   spark-master:
-    image: bitnami/spark:latest
+    image: bitnami/spark:3
     environment:
       - SPARK_MODE=master
       - SPARK_RPC_AUTHENTICATION_ENABLED=no
@@ -35,7 +35,7 @@ services:
       - '7077:7077'
 
   spark-worker:
-    image: bitnami/spark:latest
+    image: bitnami/spark:3
     environment:
       - SPARK_MODE=worker
       - SPARK_MASTER_URL=spark://spark-master:7077
@@ -52,3 +52,14 @@ services:
     image: redis:latest
     ports:
       - '6379:6379'
+
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    depends_on:
+      - kafka
+      - redis
+    environment:
+      - KAFKA_BROKER=kafka:9092
+      - REDIS_URL=redis://redis:6379
