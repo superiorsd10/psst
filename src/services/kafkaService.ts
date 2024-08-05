@@ -27,4 +27,4 @@ class KafkaService {
     }
 }
 
-export const kafkaService = new KafkaService();
+export const kafkaProducer = new KafkaService();
