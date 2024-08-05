@@ -64,6 +64,7 @@ class PasteService {
         const cachedPaste = await redisService.get(`paste:${pasteId}`);
 
         if (cachedPaste) {
+            await pasteClickService.incrementClick(pasteId);
             return JSON.parse(cachedPaste);
         }
 
