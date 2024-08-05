@@ -1,14 +1,13 @@
-import { Response, NextFunction } from 'express';
-import { AuthRequest } from '../../interfaces/authRequest';
+import { Request, Response, NextFunction } from 'express';
 import { jwtService } from '../../services/jwtService';
 import { ApiError } from '../../utils/apiError';
 
 export const authMiddleware = (
-    req: AuthRequest,
+    req: Request,
     res: Response,
     next: NextFunction
 ) => {
-    const authHeader = req.headers.get('authorization');
+    const authHeader = req.headers.authorization;
     if (!authHeader) {
         return next(ApiError.unauthorized('No token provided'));
     }
