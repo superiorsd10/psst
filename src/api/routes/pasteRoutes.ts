@@ -17,7 +17,6 @@ router.post(
 router.get(
     '/:id',
     getPasteMiddleware,
-    validationMiddleware(getPasteSchema),
     pasteController.getPaste
 );
 
