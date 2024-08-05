@@ -25,6 +25,37 @@ This project is a secure pastebin-like application designed to allow users to cr
 - **Click Tracking**:
   - Increment click counts in Redis, and periodically update PostgreSQL with batch processing.
 
+## Technologies
+This project utilizes a variety of technologies to provide a robust and secure pastebin-like application:
+
+- **Programming Languages & Frameworks**:
+  - **TypeScript**: Provides type safety and enhances JavaScript with static typing.
+  - **Node.js**: A JavaScript runtime built on Chrome's V8 engine, used for building server-side applications.
+  - **Express**: A web application framework for Node.js, used for handling HTTP requests and routing.
+
+- **Security**:
+  - **JWT (JSON Web Tokens)**: Used for secure user authentication and session management.
+  - **AES-256-CBC**: Advanced Encryption Standard used for encrypting paste content.
+  - **bcrypt**: A library for hashing passwords securely.
+
+- **Databases & Caching**:
+  - **PostgreSQL**: An open-source relational database used for storing user data, paste metadata, and click tracking information.
+  - **Redis**: An in-memory data structure store used for caching and managing click tracking.
+
+- **Storage & File Management**:
+  - **Amazon S3**: A scalable object storage service used for storing paste content files.
+
+- **Utilities**:
+  - **nanoid**: A library for generating unique IDs.
+  - **Bloom filter**: A probabilistic data structure used for checking uniqueness of IDs.
+  - **CRC32**: A checksum algorithm used for data integrity verification.
+
+- **Development Tools**:
+  - **Docker**: A platform for developing, shipping, and running applications in containers.
+  - **Docker Compose**: A tool for defining and running multi-container Docker applications.
+  - **ESLint**: A tool for identifying and fixing problems in JavaScript and TypeScript code.
+  - **Prettier**: A code formatter for maintaining consistent code style.
+
 
 ## Installation
 
