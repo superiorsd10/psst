@@ -3,7 +3,15 @@ import { pasteService } from '../../services/pasteService.js';
 import { CreatePasteInput } from '../../schemas/pasteSchemas.js';
 
 class PasteController {
-    async createPaste(req: Request, res: Response, next: NextFunction) {
+    /**
+     * Create a new paste.
+     * 
+     * @param {Request} req - The request object.
+     * @param {Response} res - The response object.
+     * @param {NextFunction} next - The next middleware function.
+     * @returns {Promise<void>}
+     */
+    async createPaste(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
             const input: CreatePasteInput = req.body;
             const userId = req.userId!;
@@ -14,7 +22,15 @@ class PasteController {
         }
     }
 
-    async getPaste(req: Request, res: Response, next: NextFunction) {
+    /**
+     * Get a paste by ID.
+     * 
+     * @param {Request} req - The request object.
+     * @param {Response} res - The response object.
+     * @param {NextFunction} next - The next middleware function.
+     * @returns {Promise<void>}
+     */
+    async getPaste(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
             const { id } = req.params;
             const { password } = req.query;

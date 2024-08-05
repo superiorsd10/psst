@@ -3,11 +3,15 @@ import { userService } from '../../services/userService.js';
 import { LoginInput, RegisterInput } from '../../schemas/userSchemas.js';
 
 class UserController {
-    async register(
-        req: Request,
-        res: Response,
-        next: NextFunction
-    ): Promise<void> {
+    /**
+     * Register a new user.
+     * 
+     * @param {Request} req - The request object.
+     * @param {Response} res - The response object.
+     * @param {NextFunction} next - The next middleware function.
+     * @returns {Promise<void>}
+     */
+    async register(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
             const user: RegisterInput = req.body;
             const result = await userService.register(
@@ -20,11 +24,15 @@ class UserController {
         }
     }
 
-    async login(
-        req: Request,
-        res: Response,
-        next: NextFunction
-    ): Promise<void> {
+    /**
+     * Log in a user.
+     * 
+     * @param {Request} req - The request object.
+     * @param {Response} res - The response object.
+     * @param {NextFunction} next - The next middleware function.
+     * @returns {Promise<void>}
+     */
+    async login(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
             const user: LoginInput = req.body;
             const result = await userService.login(
