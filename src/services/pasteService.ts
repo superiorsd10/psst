@@ -53,6 +53,57 @@ class PasteService {
             throw ApiError.internal('Error creating paste');
         }
     }
+
+    async getPaste(pasteId: string, password?: string): Promise<any> {
+        const paste = await prisma.paste.findUnique({ where: { id: pasteId } });
+
+        if (!paste) {
+            throw ApiError.notFound('Paste not found');
+        }
+
+        if (paste.expirationTime && paste.expirationTime < new Date()) {
+            throw ApiError.notFound('Paste has expired');
+        }
+
+        const contentUrl = await s3Service.getSignedUrl(paste.contentUrl);
+
+        let content = await this.fetchContent(contentUrl);
+
+        if (paste.isSecured) {
+            if (!password) {
+                throw ApiError.unauthorized('Password required for this paste');
+            }
+
+            if (password !== paste.password) {
+                throw ApiError.unauthorized('Incorrect password');
+            }
+
+            if (paste.checksumCRC) {
+                const currentCRC = encryptionService.calculateCRC32(
+                    Buffer.from(content)
+                );
+                if (currentCRC !== paste.checksumCRC) {
+                    throw ApiError.badRequest(
+                        'Paste content integrity check failed'
+                    );
+                }
+            }
+
+            const { encryptedData, iv } = JSON.parse(content);
+            content = encryptionService.decrypt(encryptedData, iv);
+        }
+
+        return { ...paste, content };
+    }
+
+    private async fetchContent(url: string): Promise<string> {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw ApiError.internal('Error fetching paste content');
+        }
+
+        return await response.text();
+    }
 }
 
 export const pasteService = new PasteService();
