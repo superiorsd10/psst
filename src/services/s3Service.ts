@@ -23,6 +23,13 @@ class S3Service {
         this.bucket = config.awsS3Bucket;
     }
 
+    /**
+     * Uploads a file to the S3 bucket.
+     * @param {string} key - The key under which to store the file.
+     * @param {Buffer} body - The content of the file to upload.
+     * @returns {Promise<void>}
+     * @throws {ApiError} - Throws an error if there is an issue uploading the file.
+     */
     async uploadFile(key: string, body: Buffer): Promise<void> {
         const command = new PutObjectCommand({
             Bucket: this.bucket,
@@ -37,6 +44,12 @@ class S3Service {
         }
     }
 
+    /**
+     * Generates a signed URL for accessing a file in S3.
+     * @param {string} key - The key of the file to generate a signed URL for.
+     * @returns {Promise<string>} - The signed URL for the file.
+     * @throws {ApiError} - Throws an error if there is an issue generating the signed URL.
+     */
     async getSignedUrl(key: string): Promise<string> {
         const command = new GetObjectCommand({
             Bucket: this.bucket,
@@ -50,6 +63,12 @@ class S3Service {
         }
     }
 
+    /**
+     * Deletes a file from the S3 bucket.
+     * @param {string} key - The key of the file to delete.
+     * @returns {Promise<void>}
+     * @throws {ApiError} - Throws an error if there is an issue deleting the file.
+     */
     async deleteFile(key: string): Promise<void> {
         const command = new DeleteObjectCommand({
             Bucket: this.bucket,

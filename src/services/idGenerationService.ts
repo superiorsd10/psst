@@ -12,14 +12,18 @@ class IdGenerationService {
             '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz',
             10
         );
-        
-        const expectedItems = 10000000; 
-        const falsePositiveRate = 0.01; 
+
+        const expectedItems = 10000000;
+        const falsePositiveRate = 0.01;
 
         this.bloomFilter = BloomFilter.create(expectedItems, falsePositiveRate);
         this.initializeBloomFilter();
     }
 
+    /**
+     * Initializes the Bloom filter with existing IDs from the database.
+     * @private
+     */
     private async initializeBloomFilter() {
         const existingIds = await prisma.paste.findMany({
             select: { id: true }
@@ -27,6 +31,11 @@ class IdGenerationService {
         existingIds.forEach(({ id }) => this.bloomFilter.add(id));
     }
 
+    /**
+     * Generates a unique ID.
+     * @returns {Promise<string>} The generated unique ID.
+     * @throws {Error} If a unique ID cannot be generated after multiple attempts.
+     */
     async generateUniqueId(): Promise<string> {
         let id: string;
         let attempts = 0;

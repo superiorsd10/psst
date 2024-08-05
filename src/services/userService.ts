@@ -4,6 +4,13 @@ import { jwtService } from './jwtService.js';
 import { ApiError } from '../utils/apiError.js';
 
 class UserService {
+    /**
+     * Registers a new user and generates an authentication token.
+     * @param {string} username - The username of the new user.
+     * @param {string} password - The password of the new user.
+     * @returns {Promise<{ token: string }>} - The generated authentication token.
+     * @throws {ApiError} - Throws an error if the username already exists or if there is an issue registering the user.
+     */
     async register(
         username: string,
         password: string
@@ -38,6 +45,13 @@ class UserService {
         }
     }
 
+    /**
+     * Authenticates a user and generates an authentication token.
+     * @param {string} username - The username of the user.
+     * @param {string} password - The password of the user.
+     * @returns {Promise<{ token: string }>} - The generated authentication token.
+     * @throws {ApiError} - Throws an error if the credentials are invalid or if there is an issue logging in.
+     */
     async login(
         username: string,
         password: string

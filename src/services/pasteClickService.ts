@@ -6,10 +6,20 @@ const BATCH_SIZE = 100;
 const UPDATE_INTERVAL = 60 * 60 * 1000;
 
 class PasteClickService {
+    /**
+     * Increments the click count for a given paste ID in Redis.
+     * @param {string} pasteId - The ID of the paste.
+     * @returns {Promise<void>}
+     */
     async incrementClick(pasteId: string): Promise<void> {
         await redisService.zincrby(CLICK_SET_KEY, 1, pasteId);
     }
 
+    /**
+     * Processes a batch of click data and updates the database.
+     * @private
+     * @returns {Promise<void>}
+     */
     private async processBatch(): Promise<void> {
         const clicks = await redisService.zrangebyscore(
             CLICK_SET_KEY,
@@ -48,6 +58,10 @@ class PasteClickService {
         );
     }
 
+    /**
+     * Starts a worker to periodically process click updates.
+     * @returns {Promise<void>}
+     */
     async startClickUpdatesWorker(): Promise<void> {
         setInterval(async () => {
             try {

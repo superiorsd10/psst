@@ -8,6 +8,13 @@ import { redisService } from './redisService.js';
 import { pasteClickService } from './pasteClickService.js';
 
 class PasteService {
+    /**
+     * Creates a new paste entry, encrypting it if required and storing it in S3.
+     * @param {CreatePasteInput} input - The input data for the paste, including content, title, tags, etc.
+     * @param {string} userId - The ID of the user creating the paste.
+     * @returns {Promise<{ pasteId: string }>} - The ID of the created paste.
+     * @throws {ApiError} - Throws an error if the content exceeds the size limit or if there is a problem creating the paste.
+     */
     async createPaste(
         input: CreatePasteInput,
         userId: string
@@ -56,6 +63,14 @@ class PasteService {
         }
     }
 
+    /**
+     * Retrieves a paste by its ID, decrypting it if necessary and validating permissions.
+     * @param {string} pasteId - The ID of the paste to retrieve.
+     * @param {string} [password] - Optional password for secured pastes.
+     * @param {string} [requestUserId] - Optional user ID to check access permissions.
+     * @returns {Promise<any>} - The paste data including content.
+     * @throws {ApiError} - Throws an error if the paste is not found, has expired, is not accessible, or if decryption fails.
+     */
     async getPaste(
         pasteId: string,
         password?: string,
@@ -83,8 +98,8 @@ class PasteService {
                 'You do not have permission to view this paste'
             );
         }
-        const contentUrl = await s3Service.getSignedUrl(paste.contentUrl);
 
+        const contentUrl = await s3Service.getSignedUrl(paste.contentUrl);
         let content = await this.fetchContent(contentUrl);
 
         if (paste.isSecured) {
@@ -112,20 +127,24 @@ class PasteService {
         }
 
         const pasteData = { ...paste, content };
-
         await redisService.set(`paste:${pasteId}`, JSON.stringify(pasteData));
-
         await pasteClickService.incrementClick(pasteId);
 
         return pasteData;
     }
 
+    /**
+     * Fetches the content of a paste from a given URL.
+     * @param {string} url - The URL to fetch content from.
+     * @returns {Promise<string>} - The content of the paste.
+     * @throws {ApiError} - Throws an error if there is an issue fetching the content.
+     * @private
+     */
     private async fetchContent(url: string): Promise<string> {
         const response = await fetch(url);
         if (!response.ok) {
             throw ApiError.internal('Error fetching paste content');
         }
-
         return await response.text();
     }
 }
