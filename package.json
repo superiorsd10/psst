@@ -22,6 +22,7 @@
     "@aws-sdk/s3-request-presigner": "^3.623.0",
     "@prisma/client": "^5.17.0",
     "bcrypt": "^5.1.1",
+    "bloom-filters": "^3.0.2",
     "cors": "^2.8.5",
     "crypto": "^1.0.1",
     "dotenv": "^16.4.5",
