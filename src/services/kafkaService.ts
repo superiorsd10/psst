@@ -1,12 +1,12 @@
-import { Kafka, Producer } from "kafkajs";
-import config from "../config/config";
+import { Kafka, Producer } from 'kafkajs';
+import config from '../config/config';
 
 class KafkaService {
     private producer: Producer;
 
     constructor() {
         const kafka = new Kafka({
-            clientId: 'psst', 
+            clientId: 'psst',
             brokers: [config.kafkaBroker]
         });
 
@@ -15,7 +15,12 @@ class KafkaService {
     }
 
     private async connect() {
-        await this.producer.connect();
+        try {
+            await this.producer.connect();
+            console.log('Connected to Kafka');
+        } catch (error) {
+            console.error('Failed to connect to Kafka:', error);
+        }
     }
 
     async send(message: any) {
@@ -23,6 +28,15 @@ class KafkaService {
             await this.producer.send(message);
         } catch (error) {
             console.error('Error sending message to Kafka:', error);
+        }
+    }
+
+    async disconnect() {
+        try {
+            await this.producer.disconnect();
+            console.log('Disconnected from Kafka');
+        } catch (error) {
+            console.error('Error disconnecting from Kafka:', error);
         }
     }
 }
