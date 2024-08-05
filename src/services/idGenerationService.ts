@@ -1,17 +1,22 @@
 import { customAlphabet } from 'nanoid';
-import { BloomFilter } from 'bloom-filters';
+import pkg from 'bloom-filters';
+const { BloomFilter } = pkg;
 import prisma from '../prisma/prisma.js';
 
 class IdGenerationService {
     private nanoid: (size?: number) => string;
-    private bloomFilter: BloomFilter;
+    private bloomFilter: pkg.BloomFilter;
 
     constructor() {
         this.nanoid = customAlphabet(
             '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz',
             10
         );
-        this.bloomFilter = new BloomFilter(10000000, 0.01);
+        
+        const expectedItems = 10000000; 
+        const falsePositiveRate = 0.01; 
+
+        this.bloomFilter = BloomFilter.create(expectedItems, falsePositiveRate);
         this.initializeBloomFilter();
     }
 
