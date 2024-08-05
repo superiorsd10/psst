@@ -11,7 +11,6 @@ const config = {
     awsAccessKeyId: process.env.AWS_ACCESS_KEY_ID || '',
     awsSecretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || '',
     encryptionKey: process.env.ENCRYPTION_KEY || '',
-    kafkaBroker: process.env.KAFKA_BROKER || ''
 };
 
 export default config;
