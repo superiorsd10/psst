@@ -22,6 +22,10 @@ export class ApiError extends Error {
         return new ApiError(HttpStatusCode.NOT_FOUND, msg);
     }
 
+    static forbidden(msg: string): ApiError {
+        return new ApiError(HttpStatusCode.FORBIDDEN, msg);
+    }
+
     static internal(msg: string): ApiError {
         return new ApiError(HttpStatusCode.INTERNAL_SERVER_ERROR, msg);
     }

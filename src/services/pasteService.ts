@@ -2,8 +2,10 @@ import prisma from '../prisma/prisma';
 import { s3Service } from './s3Service';
 import { encryptionService } from './encryptionService';
 import { idGenerationService } from './idGenerationService';
+import { kafkaProducer } from './kafkaService';
 import { ApiError } from '../utils/apiError';
 import { CreatePasteInput } from '../schemas/pasteSchemas';
+import { redisService } from './redisService';
 
 class PasteService {
     async createPaste(
@@ -54,7 +56,17 @@ class PasteService {
         }
     }
 
-    async getPaste(pasteId: string, password?: string): Promise<any> {
+    async getPaste(
+        pasteId: string,
+        password?: string,
+        requestUserId?: string
+    ): Promise<any> {
+        const cachedPaste = await redisService.get(`paste:${pasteId}`);
+
+        if (cachedPaste) {
+            return JSON.parse(cachedPaste);
+        }
+
         const paste = await prisma.paste.findUnique({ where: { id: pasteId } });
 
         if (!paste) {
@@ -65,7 +77,10 @@ class PasteService {
             throw ApiError.notFound('Paste has expired');
         }
 
-        const contentUrl = await s3Service.getSignedUrl(paste.contentUrl);
+        if (paste.visibility === 'PRIVATE' && paste.userId !== requestUserId) {
+            throw ApiError
+        }
+            const contentUrl = await s3Service.getSignedUrl(paste.contentUrl);
 
         let content = await this.fetchContent(contentUrl);
 
