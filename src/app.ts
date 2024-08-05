@@ -5,6 +5,7 @@ import cors from 'cors';
 import { rateLimiterMiddleware } from './api/middlewares/rateLimiterMiddleware';
 import { errorHandlerMiddleware } from './api/middlewares/errorHandlerMiddleware';
 import userRoutes from './api/routes/userRoutes';
+import pasteRoutes from './api/routes/pasteRoutes';
 
 const createApp = (): Express => {
     const app = express();
@@ -17,6 +18,7 @@ const createApp = (): Express => {
     app.use(rateLimiterMiddleware);
 
     app.use('/api/user', userRoutes);
+    app.use('/api/paste', pasteRoutes);
 
     app.use(errorHandlerMiddleware);
 
