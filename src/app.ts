@@ -4,6 +4,7 @@ import morgan from 'morgan';
 import cors from 'cors';
 import { rateLimiterMiddleware } from './api/middlewares/rateLimiterMiddleware';
 import { errorHandlerMiddleware } from './api/middlewares/errorHandlerMiddleware';
+import userRoutes from './api/routes/userRoutes';
 
 const createApp = (): Express => {
     const app = express();
@@ -14,6 +15,8 @@ const createApp = (): Express => {
     app.use(express.json());
 
     app.use(rateLimiterMiddleware);
+
+    app.use('/api/user', userRoutes);
 
     app.use(errorHandlerMiddleware);
 
