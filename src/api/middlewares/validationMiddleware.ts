@@ -2,6 +2,12 @@ import { Request, Response, NextFunction } from 'express';
 import { ZodSchema, ZodError } from 'zod';
 import { HttpStatusCode } from '../../utils/httpStatusCodes.js';
 
+/**
+ * Middleware to validate request data against a Zod schema.
+ * 
+ * @param {ZodSchema} schema - The Zod schema to validate against.
+ * @returns {Function} Middleware function to validate the request data.
+ */
 export const validationMiddleware = (schema: ZodSchema) => {
     return (req: Request, res: Response, next: NextFunction) => {
         try {
@@ -14,10 +20,10 @@ export const validationMiddleware = (schema: ZodSchema) => {
                 });
                 res.status(HttpStatusCode.BAD_REQUEST).json({
                     error: 'Invalid request data',
-                    details: error.errors.map((e) => {
-                        field: e.path.join('.');
-                        message: e.message;
-                    }),
+                    details: error.errors.map((e) => ({
+                        field: e.path.join('.'),
+                        message: e.message
+                    })),
                     success: false
                 });
             } else {

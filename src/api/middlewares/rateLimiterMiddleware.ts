@@ -3,6 +3,11 @@ import RedisStore from 'rate-limit-redis';
 import { redisService } from '../../services/redisService.js';
 import { HttpStatusCode } from '../../utils/httpStatusCodes.js';
 
+/**
+ * Middleware to limit repeated requests to public APIs.
+ * 
+ * @type {Function}
+ */
 export const rateLimiterMiddleware = rateLimit({
     store: new RedisStore({
         sendCommand: (...args: string[]) =>

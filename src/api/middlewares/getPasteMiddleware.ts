@@ -1,6 +1,13 @@
 import { Request, Response, NextFunction } from 'express';
 import { jwtService } from '../../services/jwtService.js';
 
+/**
+ * Middleware to get paste with optional authentication.
+ * 
+ * @param {Request} req - The request object.
+ * @param {Response} res - The response object.
+ * @param {NextFunction} next - The next middleware function.
+ */
 export const getPasteMiddleware = (
     req: Request,
     res: Response,

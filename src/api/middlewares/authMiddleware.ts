@@ -2,6 +2,13 @@ import { Request, Response, NextFunction } from 'express';
 import { jwtService } from '../../services/jwtService.js';
 import { ApiError } from '../../utils/apiError.js';
 
+/**
+ * Middleware to authenticate JWT token from the request header.
+ *
+ * @param {Request} req - The request object.
+ * @param {Response} res - The response object.
+ * @param {NextFunction} next - The next middleware function.
+ */
 export const authMiddleware = (
     req: Request,
     res: Response,
