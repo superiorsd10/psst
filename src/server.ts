@@ -2,6 +2,7 @@ import http from 'http';
 import { Express } from 'express';
 import config from './config/config';
 import { redisService } from './services/redisService';
+import { kafkaProducer } from './services/kafkaService';
 
 const PORT = config.port;
 
@@ -9,6 +10,8 @@ const startServer = async () => {
     try {
         await redisService.initialize();
         console.info('Redis initialized successfully');
+
+        await kafkaProducer.connect();
 
         const { default: createApp } = await import('./app');
 
@@ -27,6 +30,7 @@ const startServer = async () => {
                 console.info('HTTP server closed');
                 await redisService.disconnect();
                 console.info('Redis disconnected');
+                await kafkaProducer.disconnect();
                 process.exit(0);
             });
         };
