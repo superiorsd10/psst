@@ -1,3 +1,8 @@
+/**
+ * Enum for HTTP status codes.
+ * @readonly
+ * @enum {number}
+ */
 export enum HttpStatusCode {
     SUCCESS = 200,
     CREATED = 201,
