@@ -1,7 +1,7 @@
 import { Kafka, Producer } from 'kafkajs';
 import config from '../config/config';
 
-class KafkaService {
+class KafkaProducerService {
     private producer: Producer;
 
     constructor() {
@@ -40,4 +40,4 @@ class KafkaService {
     }
 }
 
-export const kafkaProducer = new KafkaService();
+export const kafkaProducerService = new KafkaProducerService();

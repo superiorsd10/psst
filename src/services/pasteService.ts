@@ -2,7 +2,7 @@ import prisma from '../prisma/prisma';
 import { s3Service } from './s3Service';
 import { encryptionService } from './encryptionService';
 import { idGenerationService } from './idGenerationService';
-import { kafkaProducer } from './kafkaService';
+import { kafkaProducerService } from './kafkaService';
 import { ApiError } from '../utils/apiError';
 import { CreatePasteInput } from '../schemas/pasteSchemas';
 import { redisService } from './redisService';
@@ -115,7 +115,7 @@ class PasteService {
 
         await redisService.set(`paste:${pasteId}`, JSON.stringify(pasteData));
 
-        await kafkaProducer.send({
+        await kafkaProducerService.send({
             topic: 'paste-views',
             messages: [
                 {
