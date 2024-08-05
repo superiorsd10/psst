@@ -6,7 +6,7 @@
   "main": "src/server.ts",
   "scripts": {
     "build": "tsc",
-    "start:dev": "npx nodemon",
+    "start:dev": "nodemon",
     "start": "npm run generate && node --es-module-specifier-resolution=node dist/server.js",
     "lint": "eslint . --ext .ts",
     "lint-and-fix": "eslint . --ext .ts --fix",
