@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { jwtService } from '../../services/jwtService';
+import { jwtService } from '../../services/jwtService.js';
 
 export const getPasteMiddleware = (
     req: Request,

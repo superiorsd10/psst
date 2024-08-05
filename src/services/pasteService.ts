@@ -1,11 +1,11 @@
-import prisma from '../prisma/prisma';
-import { s3Service } from './s3Service';
-import { encryptionService } from './encryptionService';
-import { idGenerationService } from './idGenerationService';
-import { ApiError } from '../utils/apiError';
-import { CreatePasteInput } from '../schemas/pasteSchemas';
-import { redisService } from './redisService';
-import { pasteClickService } from './pasteClickService';
+import prisma from '../prisma/prisma.js';
+import { s3Service } from './s3Service.js';
+import { encryptionService } from './encryptionService.js';
+import { idGenerationService } from './idGenerationService.js';
+import { ApiError } from '../utils/apiError.js';
+import { CreatePasteInput } from '../schemas/pasteSchemas.js';
+import { redisService } from './redisService.js';
+import { pasteClickService } from './pasteClickService.js';
 
 class PasteService {
     async createPaste(

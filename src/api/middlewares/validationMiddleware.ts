@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { ZodSchema, ZodError } from 'zod';
-import { HttpStatusCode } from '../../utils/httpStatusCodes';
+import { HttpStatusCode } from '../../utils/httpStatusCodes.js';
 
 export const validationMiddleware = (schema: ZodSchema) => {
     return (req: Request, res: Response, next: NextFunction) => {

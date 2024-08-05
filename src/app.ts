@@ -2,10 +2,10 @@ import express, { Express } from 'express';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import cors from 'cors';
-import { rateLimiterMiddleware } from './api/middlewares/rateLimiterMiddleware';
-import { errorHandlerMiddleware } from './api/middlewares/errorHandlerMiddleware';
-import userRoutes from './api/routes/userRoutes';
-import pasteRoutes from './api/routes/pasteRoutes';
+import { rateLimiterMiddleware } from './api/middlewares/rateLimiterMiddleware.js';
+import { errorHandlerMiddleware } from './api/middlewares/errorHandlerMiddleware.js';
+import userRoutes from './api/routes/userRoutes.js';
+import pasteRoutes from './api/routes/pasteRoutes.js';
 
 const createApp = (): Express => {
     const app = express();

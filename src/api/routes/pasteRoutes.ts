@@ -1,9 +1,9 @@
 import express from 'express';
-import { pasteController } from '../controllers/pasteController';
-import { validationMiddleware } from '../middlewares/validationMiddleware';
-import { createPasteSchema, getPasteSchema } from '../../schemas/pasteSchemas';
-import { authMiddleware } from '../middlewares/authMiddleware';
-import { getPasteMiddleware } from '../middlewares/getPasteMiddleware';
+import { pasteController } from '../controllers/pasteController.js';
+import { validationMiddleware } from '../middlewares/validationMiddleware.js';
+import { createPasteSchema, getPasteSchema } from '../../schemas/pasteSchemas.js';
+import { authMiddleware } from '../middlewares/authMiddleware.js';
+import { getPasteMiddleware } from '../middlewares/getPasteMiddleware.js';
 
 const router = express.Router();
 

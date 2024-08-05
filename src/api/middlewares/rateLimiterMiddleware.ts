@@ -1,7 +1,7 @@
 import rateLimit from 'express-rate-limit';
 import RedisStore from 'rate-limit-redis';
-import { redisService } from '../../services/redisService';
-import { HttpStatusCode } from '../../utils/httpStatusCodes';
+import { redisService } from '../../services/redisService.js';
+import { HttpStatusCode } from '../../utils/httpStatusCodes.js';
 
 export const rateLimiterMiddleware = rateLimit({
     store: new RedisStore({

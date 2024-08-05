@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
-import { ApiError } from '../utils/apiError';
-import config from '../config/config';
+import { ApiError } from '../utils/apiError.js';
+import config from '../config/config.js';
 
 class JwtService {
     private readonly secret: string;

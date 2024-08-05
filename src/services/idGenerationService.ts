@@ -1,6 +1,6 @@
 import { customAlphabet } from 'nanoid';
 import { BloomFilter } from 'bloom-filters';
-import prisma from '../prisma/prisma';
+import prisma from '../prisma/prisma.js';
 
 class IdGenerationService {
     private nanoid: (size?: number) => string;

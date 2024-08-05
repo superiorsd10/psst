@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
-import { pasteService } from '../../services/pasteService';
-import { CreatePasteInput } from '../../schemas/pasteSchemas';
+import { pasteService } from '../../services/pasteService.js';
+import { CreatePasteInput } from '../../schemas/pasteSchemas.js';
 
 class PasteController {
     async createPaste(req: Request, res: Response, next: NextFunction) {

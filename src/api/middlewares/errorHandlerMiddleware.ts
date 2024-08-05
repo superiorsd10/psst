@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
-import { ApiError } from '../../utils/apiError';
-import { HttpStatusCode } from '../../utils/httpStatusCodes';
+import { ApiError } from '../../utils/apiError.js';
+import { HttpStatusCode } from '../../utils/httpStatusCodes.js';
 
 export const errorHandlerMiddleware = (
     error: Error,

@@ -1,5 +1,5 @@
 import { createClient, RedisClientType } from 'redis';
-import config from '../config/config';
+import config from '../config/config.js';
 
 class RedisService {
     private static instance: RedisService;

@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
-import { jwtService } from '../../services/jwtService';
-import { ApiError } from '../../utils/apiError';
+import { jwtService } from '../../services/jwtService.js';
+import { ApiError } from '../../utils/apiError.js';
 
 export const authMiddleware = (
     req: Request,

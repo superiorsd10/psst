@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs';
-import prisma from '../prisma/prisma';
-import { jwtService } from './jwtService';
-import { ApiError } from '../utils/apiError';
+import prisma from '../prisma/prisma.js';
+import { jwtService } from './jwtService.js';
+import { ApiError } from '../utils/apiError.js';
 
 class UserService {
     async register(

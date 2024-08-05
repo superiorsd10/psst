@@ -1,8 +1,8 @@
 import http from 'http';
 import { Express } from 'express';
-import config from './config/config';
-import { redisService } from './services/redisService';
-import { pasteClickService } from './services/pasteClickService';
+import config from './config/config.js';
+import { redisService } from './services/redisService.js';
+import { pasteClickService } from './services/pasteClickService.js';
 
 const PORT = config.port;
 

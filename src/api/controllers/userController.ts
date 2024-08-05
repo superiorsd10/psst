@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
-import { userService } from '../../services/userService';
-import { LoginInput, RegisterInput } from '../../schemas/userSchemas';
+import { userService } from '../../services/userService.js';
+import { LoginInput, RegisterInput } from '../../schemas/userSchemas.js';
 
 class UserController {
     async register(

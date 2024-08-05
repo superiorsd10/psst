@@ -1,5 +1,5 @@
-import { redisService } from './redisService';
-import prisma from '../prisma/prisma';
+import { redisService } from './redisService.js';
+import prisma from '../prisma/prisma.js';
 
 const CLICK_SET_KEY = 'paste:clicks';
 const BATCH_SIZE = 100;

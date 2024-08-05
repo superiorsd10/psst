@@ -1,6 +1,6 @@
 import crypto from 'crypto';
 import { ApiError } from '../utils/apiError';
-import config from '../config/config';
+import config from '../config/config.js';
 
 class EncryptionService {
     private algorithm = 'aes-256-cbc';
