@@ -18,9 +18,11 @@ class PasteController {
         try {
             const { id } = req.params;
             const { password } = req.query;
+            const userId = req.userId;
             const paste = await pasteService.getPaste(
                 id,
-                password as string | undefined
+                password as string | undefined,
+                userId
             );
             res.json(paste);
         } catch (error) {
