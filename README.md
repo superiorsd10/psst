@@ -3,6 +3,16 @@
 ## Description
 This project is a secure pastebin-like application designed to allow users to create, manage, and access encrypted pastes. It provides user authentication, secure paste storage, and click tracking, with data managed across multiple services including AWS S3, Redis, and PostgreSQL.
 
+## Table of Contents
+- [Features](#features)
+- [Technologies](#technologies)
+- [Installation](#installation)
+- [Architecture](#architecture)
+- [Folder Structure](#folder-structure)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [Contact](#contact)
+
 ## Features
 - **User Authentication**: 
   - Register and log in using a username and password.
