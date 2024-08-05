@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { jwtService } from '../../services/jwtService';
 
-export const authMiddleware = (
+export const getPasteMiddleware = (
     req: Request,
     res: Response,
     next: NextFunction
