@@ -7,6 +7,10 @@ import { getPasteMiddleware } from '../middlewares/getPasteMiddleware.js';
 
 const router = express.Router();
 
+/**
+ * Route to create a new paste.
+ * Requires authentication and validation of request body.
+ */
 router.post(
     '/',
     authMiddleware,
@@ -14,6 +18,10 @@ router.post(
     pasteController.createPaste
 );
 
+/**
+ * Route to get a paste by ID.
+ * Optionally requires authentication based on paste visibility.
+ */
 router.get(
     '/:id',
     getPasteMiddleware,
