@@ -1,4 +1,4 @@
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import prisma from '../prisma/prisma';
 import { jwtService } from './jwtService';
 import { ApiError } from '../utils/apiError';
