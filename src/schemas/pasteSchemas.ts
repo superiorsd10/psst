@@ -10,13 +10,4 @@ export const createPasteSchema = z.object({
     password: z.string().optional()
 });
 
-export const getPasteSchema = z.object({
-    params: z.object({
-        id: z.string()
-    }),
-    query: z.object({
-        password: z.string().optional()
-    })
-});
-
 export type CreatePasteInput = z.infer<typeof createPasteSchema>;

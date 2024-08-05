@@ -1,7 +1,7 @@
 import express from 'express';
 import { pasteController } from '../controllers/pasteController.js';
 import { validationMiddleware } from '../middlewares/validationMiddleware.js';
-import { createPasteSchema, getPasteSchema } from '../../schemas/pasteSchemas.js';
+import { createPasteSchema } from '../../schemas/pasteSchemas.js';
 import { authMiddleware } from '../middlewares/authMiddleware.js';
 import { getPasteMiddleware } from '../middlewares/getPasteMiddleware.js';
 
