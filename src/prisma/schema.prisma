@@ -12,6 +12,32 @@ model User {
   username  String   @unique
   password  String
   createdAt DateTime @default(now()) @map("created_at")
+  Paste     Paste[]
 
   @@map("users")
+}
+
+model Paste {
+  id             String     @id
+  title          String
+  contentUrl     String     @map("content_url")
+  userId         String     @map("user_id")
+  tags           String[]
+  visibility     Visibility
+  expirationTime DateTime?  @map("expiration_time")
+  isSecured      Boolean    @map("is_secured")
+  password       String?
+  createdAt      DateTime   @default(now()) @map("created_at")
+  numberOfClicks Int        @default(0) @map("number_of_clicks")
+  checksumCRC    String?    @map("checksum_crc")
+  contentSize    Int        @map("content_size")
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("pastes")
+}
+
+enum Visibility {
+  PUBLIC
+  PRIVATE
 }
