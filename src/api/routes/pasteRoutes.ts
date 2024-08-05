@@ -3,6 +3,7 @@ import { pasteController } from '../controllers/pasteController';
 import { validationMiddleware } from '../middlewares/validationMiddleware';
 import { createPasteSchema, getPasteSchema } from '../../schemas/pasteSchemas';
 import { authMiddleware } from '../middlewares/authMiddleware';
+import { getPasteMiddleware } from '../middlewares/getPasteMiddleware';
 
 const router = express.Router();
 
@@ -15,6 +16,7 @@ router.post(
 
 router.get(
     '/:id',
+    getPasteMiddleware,
     validationMiddleware(getPasteSchema),
     pasteController.getPaste
 );
