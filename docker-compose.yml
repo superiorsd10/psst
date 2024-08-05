@@ -63,3 +63,12 @@ services:
     environment:
       - KAFKA_BROKER=kafka:9092
       - REDIS_URL=redis://redis:6379
+
+  spark-job:
+    build:
+      context: ./spark-job
+      dockerfile: Dockerfile
+    depends_on:
+      - spark-master
+      - kafka
+      - redis
