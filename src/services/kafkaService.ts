@@ -11,10 +11,9 @@ class KafkaService {
         });
 
         this.producer = kafka.producer();
-        this.connect();
     }
 
-    private async connect() {
+    async connect() {
         try {
             await this.producer.connect();
             console.log('Connected to Kafka');
