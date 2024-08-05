@@ -6,6 +6,7 @@ import { kafkaProducer } from './kafkaService';
 import { ApiError } from '../utils/apiError';
 import { CreatePasteInput } from '../schemas/pasteSchemas';
 import { redisService } from './redisService';
+import { timeStamp } from 'console';
 
 class PasteService {
     async createPaste(
@@ -78,9 +79,11 @@ class PasteService {
         }
 
         if (paste.visibility === 'PRIVATE' && paste.userId !== requestUserId) {
-            throw ApiError
+            throw ApiError.forbidden(
+                'You do not have permission to view this paste'
+            );
         }
-            const contentUrl = await s3Service.getSignedUrl(paste.contentUrl);
+        const contentUrl = await s3Service.getSignedUrl(paste.contentUrl);
 
         let content = await this.fetchContent(contentUrl);
 
@@ -108,7 +111,23 @@ class PasteService {
             content = encryptionService.decrypt(encryptedData, iv);
         }
 
-        return { ...paste, content };
+        const pasteData = { ...paste, content };
+
+        await redisService.set(`paste:${pasteId}`, JSON.stringify(pasteData));
+
+        await kafkaProducer.send({
+            topic: 'paste-views',
+            messages: [
+                {
+                    value: JSON.stringify({
+                        pasteId,
+                        timeStamp: new Date().toISOString()
+                    })
+                }
+            ]
+        });
+
+        return pasteData;
     }
 
     private async fetchContent(url: string): Promise<string> {
